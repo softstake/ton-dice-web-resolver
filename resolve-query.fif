@@ -1,0 +1,31 @@
+"TonUtil.fif" include
+
+{ ."usage: " @' $0 type ."<filename-base> <dice-addr> <bet-id> <seed> [<savefile>]" cr
+  ."Creates request a resolve bet to fair dice game"
+  ."and saves it into <savefile>.boc ('resolve-query.boc' by default)" cr 1 halt
+} : usage
+
+$# 4 < ' usage if
+
+false constant bounce
+
+$1 =: file-base
+$2 bounce parse-load-address =: bounce 2=: dest_addr
+$3 parse-int =: bet_id
+$4 parse-int =: seed
+def? $5 { @' $5 } { "resolve-query" } cond constant savefile
+
+file-base file>B constant wallet_pk
+
+seed wallet_pk ed25519_sign_uint constant sig
+
+<b 1 32 u, x{22222222} s, bet_id 32 u, sig B, b> // body: seqno opcode betid sig
+dup hashu wallet_pk ed25519_sign_uint // create signature of body
+
+<b b{1000100} s, dest_addr addr, 0 Gram, b{00} s, swap B, swap ref, b>
+dup ."message: " <s csr. cr
+
+2 boc+>B
+savefile +".boc"
+tuck B>file
+."(Saved to file " type .")" cr
