@@ -19,7 +19,7 @@ docker build --build-arg GITHUB_TOKEN="$GITHUB_TOKEN" -t dice-resolver .
  
 ## ENV VARS
     * CONTRACT_ADDR - Dice contract address in the TON network, required variable, no default value.
-    * KEY_FILE_BASE - Dice contract owner private key file name without extension, default value is 'owner'.
+    * PK_FILE_PATH - Dice contract owner private key file name without extension, default value is 'owner'.
     * STORAGE_HOST - Host of the 'ton-dice-web-server' service, requred variable, no default value.
     * STORAGE_PORT - Port of the 'ton-dice-web-server' service, default value is '5300'.
     * TON_API_HOST - Host of the 'ton-api' service, requred variable, no default value.
