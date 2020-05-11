@@ -16,6 +16,5 @@ FROM poma/ton
 WORKDIR /app
 COPY --from=builder /go/src/build/dice-resolver /app/
 COPY --from=builder /go/src/build/resolve-query.fif /app/
-COPY --from=builder /go/src/build/owner.pk /app/
 
 ENTRYPOINT ./dice-resolver
